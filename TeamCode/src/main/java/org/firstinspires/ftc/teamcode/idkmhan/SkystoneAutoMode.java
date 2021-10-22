@@ -9,7 +9,7 @@ import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvInternalCamera;
 
-@Autonomous(name = "Skystone Detecotor", group = "Auto")
+@Autonomous(name = "aSkystone Detecotor", group = "Auto")
 public class SkystoneAutoMode extends LinearOpMode {
     OpenCvCamera phoneCam;
 

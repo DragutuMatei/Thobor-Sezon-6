@@ -51,6 +51,8 @@ package org.firstinspires.ftc.teamcode.idkmhan;
 //}
 
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
@@ -78,7 +80,7 @@ public class Dector extends OpenCvPipeline {
     static final Rect RIGHT_ROI = new Rect(
             new Point(140, 35),
             new Point(200, 75));
-    static double PERCENT_COLOR_THRESHOLD = 0.4;
+    static double PERCENT_COLOR_THRESHOLD = 0.1;
 
     public Dector(Telemetry t) {
         telemetry = t;
@@ -87,8 +89,8 @@ public class Dector extends OpenCvPipeline {
     @Override
     public Mat processFrame(Mat input) {
         Imgproc.cvtColor(input, mat, Imgproc.COLOR_RGB2HSV);
-        Scalar lowHSV = new Scalar(23, 50, 70);
-        Scalar highHSV = new Scalar(32, 255, 255);
+        Scalar lowHSV = new Scalar(45, 100, 10);
+        Scalar highHSV = new Scalar(75, 255, 255);
 
         Core.inRange(mat, lowHSV, highHSV, mat);
 

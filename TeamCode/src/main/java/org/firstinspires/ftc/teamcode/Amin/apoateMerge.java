@@ -118,7 +118,7 @@ public class apoateMerge extends LinearOpMode
         static final int REGION_HEIGHT = 60;
 
         /*
-         * Points which actually define the sample region rectangles, derived from above values
+         * Points which actually define the sample region rectangles, derived from above valuesb
          *
          * Example of how points A and B work to define a rectangle
          *
