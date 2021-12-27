@@ -1,4 +1,5 @@
 package org.firstinspires.ftc.teamcode.idkmhan;
+
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
@@ -57,14 +58,17 @@ public class Dector extends OpenCvPipeline {
         boolean stoneLeft = leftValue > PERCENT_COLOR_THRESHOLD;
         boolean stoneRight = rightValue > PERCENT_COLOR_THRESHOLD;
 
+        telemetry.addData("stoneLeft", stoneLeft);
+        telemetry.addData("stoneRight", stoneRight);
+
         if (stoneLeft && stoneRight) {
             location = Location.NOT_FOUND;
             telemetry.addData("Skystone Location", "not found");
         } else if (stoneLeft) {
-            location = Location.RIGHT;
+            location = Location.LEFT;
             telemetry.addData("Skystone Location", "right");
         } else {
-            location = Location.LEFT;
+            location = Location.RIGHT;
             telemetry.addData("Skystone Location", "left");
         }
         telemetry.update();

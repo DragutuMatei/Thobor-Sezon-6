@@ -22,12 +22,6 @@ public class SkystoneAutoMode extends LinearOpMode {
                 .createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
         Dector detector = new Dector(telemetry);
         phoneCam.setPipeline(detector);
-//        phoneCam.openCameraDeviceAsync(
-////                () -> phoneCam.startStreaming(320, 240, OpenCvCameraRotation.UPRIGHT)
-////                OpenCvCamera.AsyncCameraCloseListener cameraCloseListener
-//                OpenCvCamera.AsyncCameraOpenListener cameraOpenListener
-//
-//        );
 
         phoneCam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
             @Override
@@ -44,22 +38,24 @@ public class SkystoneAutoMode extends LinearOpMode {
         });
 
         waitForStart();
-        switch (detector.getLocation()) {
-            case LEFT:
-                // ...
-                telemetry.addLine(String.valueOf(Dector.Location.LEFT));
-                telemetry.update();
-                break;
-            case RIGHT:
+        while (opModeIsActive()) {
+            switch (detector.getLocation()) {
+                case LEFT:
+                    // ...
+                    telemetry.addLine(String.valueOf(Dector.Location.LEFT));
+                    telemetry.update();
+                    break;
+                case RIGHT:
 
-                telemetry.addLine(String.valueOf(Dector.Location.RIGHT));
-                telemetry.update();
-                // ...
-                break;
-            case NOT_FOUND:
-                telemetry.addLine(String.valueOf(Dector.Location.NOT_FOUND));
-                telemetry.update();
-                // ...
+                    telemetry.addLine(String.valueOf(Dector.Location.RIGHT));
+                    telemetry.update();
+                    // ...
+                    break;
+                case NOT_FOUND:
+                    telemetry.addLine(String.valueOf(Dector.Location.NOT_FOUND));
+                    telemetry.update();
+                    // ...
+            }
         }
         phoneCam.stopStreaming();
     }
