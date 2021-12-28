@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Amin;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.Range;
 
@@ -9,6 +10,7 @@ import com.qualcomm.robotcore.util.Range;
 public class TeleOpulAlaBlana extends LinearOpMode {
     private DcMotor lf, lr, rf, rr;
     private double leftPower, rightPower, drive, turn;
+    private CRServo absortie;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -16,6 +18,7 @@ public class TeleOpulAlaBlana extends LinearOpMode {
         lr = hardwareMap.dcMotor.get("lr");
         rf = hardwareMap.dcMotor.get("rf");
         rr = hardwareMap.dcMotor.get("rr");
+        absortie = hardwareMap.get(CRServo.class,"absortie");
 
         lf.setDirection(DcMotor.Direction.REVERSE);
         lr.setDirection(DcMotor.Direction.REVERSE);
@@ -51,6 +54,15 @@ public class TeleOpulAlaBlana extends LinearOpMode {
             } else {
                 bagaViteza(0, 0, 0, 0);
             }
+
+            if (gamepad1.a) {
+                absortie.setPower(1);
+            } else if (gamepad1.b) {
+                absortie.setPower(-1);
+            } else {
+                absortie.setPower(0);
+            }
+
         }
     }
 
