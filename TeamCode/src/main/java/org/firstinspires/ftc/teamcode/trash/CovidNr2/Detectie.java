@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Amin.CovidNr2;
+package org.firstinspires.ftc.teamcode.trash.CovidNr2;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.opencv.core.Mat;

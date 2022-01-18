@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Amin;
+package org.firstinspires.ftc.teamcode.trash;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;

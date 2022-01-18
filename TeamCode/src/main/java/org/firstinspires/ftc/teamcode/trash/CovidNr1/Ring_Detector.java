@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Amin.CovidNr1;
+package org.firstinspires.ftc.teamcode.trash.CovidNr1;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -15,7 +15,6 @@ import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvInternalCamera;
 import org.openftc.easyopencv.OpenCvPipeline;
-import org.openftc.easyopencv.OpenCvWebcam;
 
 @Autonomous(name = "Ring_Detector",group = "Alex")
 public class Ring_Detector extends LinearOpMode{

@@ -1,75 +1,116 @@
+/*
+ *
+ * ©Thobor 2021-2022
+ *
+ *           _
+ *       .__(.)< (MEOW)
+ *        \___)
+ * ~~~~~~~~~~~~~~~~~~
+ *
+ *
+ */
+
 package org.firstinspires.ftc.teamcode.Amin;
 
+import static org.firstinspires.ftc.teamcode.Amin.NuSeMaiUmbla.FULL_POWER;
+import static org.firstinspires.ftc.teamcode.Amin.NuSeMaiUmbla.POWER_ABS;
+import static org.firstinspires.ftc.teamcode.Amin.NuSeMaiUmbla.POWER_BRAT;
+import static org.firstinspires.ftc.teamcode.Amin.NuSeMaiUmbla.POWER_RATA;
+import static org.firstinspires.ftc.teamcode.Amin.NuSeMaiUmbla.POZITIE_ARUNCA_CUVA;
+import static org.firstinspires.ftc.teamcode.Amin.NuSeMaiUmbla.POZITIE_MARKER_IA;
+import static org.firstinspires.ftc.teamcode.Amin.NuSeMaiUmbla.POZITIE_MARKER_LUAT;
+import static org.firstinspires.ftc.teamcode.Amin.NuSeMaiUmbla.POZITIE_NORMAL_CUVA;
+
+import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.util.Range;
+
+import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
+
 
 @TeleOp()
 public class TeleOpulAlaBlana extends LinearOpMode {
-    private DcMotor lf, lr, rf, rr;
-    private double leftPower, rightPower, drive, turn;
-    private CRServo absortie;
+
+    public boolean iiApasat = false;
+    public boolean iiiiicosmiiiin = false;
 
     @Override
     public void runOpMode() throws InterruptedException {
-        lf = hardwareMap.dcMotor.get("lf");
-        lr = hardwareMap.dcMotor.get("lr");
-        rf = hardwareMap.dcMotor.get("rf");
-        rr = hardwareMap.dcMotor.get("rr");
-        absortie = hardwareMap.get(CRServo.class,"absortie");
-
-        lf.setDirection(DcMotor.Direction.REVERSE);
-        lr.setDirection(DcMotor.Direction.REVERSE);
-
-        lf.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        rf.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        lr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        rr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        SampleMecanumDrive robot = new SampleMecanumDrive(hardwareMap);
 
         waitForStart();
-        while (opModeIsActive()) {
+        while (!isStopRequested()) {
 
-            drive = -gamepad1.left_stick_y;
-            turn = gamepad1.right_stick_x;
+//            double leftPower;
+//            double rightPower;
+//
+//            double drive = -gamepad1.left_stick_y;
+//            double turn = gamepad1.right_stick_x;
+//            leftPower = Range.clip(drive + turn, -1.0, 1.0);
+//            rightPower = Range.clip(drive - turn, -1.0, 1.0);
+//
+//            robot.bagaViteza(leftPower, rightPower, leftPower, rightPower);
 
-            leftPower = Range.clip(drive + turn, -1.0, 1.0);
-            rightPower = Range.clip(drive - turn, -1.0, 1.0);
 
-            lf.setPower(leftPower);
-            lr.setPower(leftPower);
-            rf.setPower(rightPower);
-            rr.setPower(rightPower);
+            robot.setWeightedDrivePower(
+                    new Pose2d(
+                            -gamepad1.left_stick_y,
+                            -gamepad1.left_stick_x,
+                            -gamepad1.right_stick_x
+                    )
+            );
 
-
+            //miscari din dpad uri
             if (gamepad1.dpad_up) {
-                bagaViteza(1, 1, 1, 1);
+                robot.bagaViteza(FULL_POWER, FULL_POWER, FULL_POWER, FULL_POWER);
             } else if (gamepad1.dpad_down) {
-                bagaViteza(-1, -1, -1, -1);
+                robot.bagaViteza(-FULL_POWER, -FULL_POWER, -FULL_POWER, -FULL_POWER);
             } else if (gamepad1.dpad_left) {
-                bagaViteza(-1, 1, 1, -1);
+                robot.bagaViteza(-FULL_POWER, FULL_POWER, FULL_POWER, -FULL_POWER);
             } else if (gamepad1.dpad_right) {
-                bagaViteza(1, -1, -1, 1);
+                robot.bagaViteza(FULL_POWER, -FULL_POWER, -FULL_POWER, FULL_POWER);
             } else {
-                bagaViteza(0, 0, 0, 0);
+                robot.bagaViteza(0, 0, 0, 0);
             }
 
+            //absortia
             if (gamepad1.a) {
-                absortie.setPower(1);
-            } else if (gamepad1.b) {
-                absortie.setPower(-1);
+                robot.setAbsortiePower(POWER_ABS);
             } else {
-                absortie.setPower(0);
+                robot.setAbsortiePower(0);
             }
 
+            if (gamepad1.x) {
+                robot.setCuvaPosition(POZITIE_NORMAL_CUVA);
+            } else if (gamepad1.y) {
+                robot.setCuvaPosition(POZITIE_ARUNCA_CUVA);
+            }
+
+            //brat
+            if (gamepad1.left_bumper) {
+                robot.setPowerBrat(POWER_BRAT);
+            } else if (gamepad1.right_bumper) {
+                robot.setPowerBrat(-POWER_BRAT);
+            } else {
+                robot.setPowerBrat(0);
+            }
+
+            //rata
+            if (gamepad1.left_trigger != 0) {
+                robot.setRataPower(POWER_RATA);
+            } else if (gamepad1.right_trigger != 0) {
+                robot.setRataPower(-POWER_RATA);
+            } else {
+                robot.setRataPower(0);
+            }
+
+            if (gamepad2.x) {
+                robot.setMarkerPosition(POZITIE_MARKER_IA);
+            } else if (gamepad2.y) {
+                robot.setMarkerPosition(POZITIE_MARKER_LUAT);
+            }
         }
     }
-
-    private void bagaViteza(double lfp, double rfp, double lrp, double rrp) {
-        lf.setPower(lfp);
-        rf.setPower(rfp);
-        lr.setPower(lrp);
-        rr.setPower(rrp);
-    }
 }
+
+
