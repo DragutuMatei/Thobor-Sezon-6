@@ -4,7 +4,7 @@ import com.acmerobotics.dashboard.config.Config;
 
 @Config()
 public class NuSeMaiUmbla {
-    public static final double FULL_POWER = 0.8;
+    public static double FULL_POWER = 0.3;
 
     public static final double POWER_RATA = 1;
     public static final double POWER_BRAT = 1;

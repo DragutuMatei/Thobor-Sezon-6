@@ -21,9 +21,12 @@ import static org.firstinspires.ftc.teamcode.Amin.NuSeMaiUmbla.POZITIE_MARKER_IA
 import static org.firstinspires.ftc.teamcode.Amin.NuSeMaiUmbla.POZITIE_MARKER_LUAT;
 import static org.firstinspires.ftc.teamcode.Amin.NuSeMaiUmbla.POZITIE_NORMAL_CUVA;
 
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 
@@ -37,9 +40,18 @@ public class TeleOpulAlaBlana extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         SampleMecanumDrive robot = new SampleMecanumDrive(hardwareMap);
+        telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
+
+        robot.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        robot.setPoseEstimate(LocalizareCaSaStiuUndeE.currentPose);
+
 
         waitForStart();
-        while (!isStopRequested()) {
+
+        if (isStopRequested()) return;
+        while (opModeIsActive() && !isStopRequested()) {
+            robot.update();
 
 //            double leftPower;
 //            double rightPower;
@@ -60,6 +72,12 @@ public class TeleOpulAlaBlana extends LinearOpMode {
                     )
             );
 
+            if(gamepad2.a){
+                NuSeMaiUmbla.FULL_POWER = 1;
+            } else if(gamepad2.b){
+                NuSeMaiUmbla.FULL_POWER = 0.3;
+            }
+
             //miscari din dpad uri
             if (gamepad1.dpad_up) {
                 robot.bagaViteza(FULL_POWER, FULL_POWER, FULL_POWER, FULL_POWER);
@@ -73,6 +91,11 @@ public class TeleOpulAlaBlana extends LinearOpMode {
                 robot.bagaViteza(0, 0, 0, 0);
             }
 
+            robot.update();
+            Pose2d poseEstimate = robot.getPoseEstimate();
+            telemetry.addData("x", poseEstimate.getX());
+            telemetry.addData("y", poseEstimate.getY());
+            telemetry.addData("heading", poseEstimate.getHeading());
             //absortia
             if (gamepad1.a) {
                 robot.setAbsortiePower(POWER_ABS);
@@ -111,6 +134,8 @@ public class TeleOpulAlaBlana extends LinearOpMode {
             }
         }
     }
+
+
 }
 
 
