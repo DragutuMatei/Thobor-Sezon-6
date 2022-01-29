@@ -65,26 +65,42 @@ public class AltTeleop extends LinearOpMode {
             this.bagaViteza(v1, v2, v3, v4);
 
             // miscari din dpad uri
-            if (gamepad1.dpad_up) {
-                this.bagaViteza(FULL_POWER, FULL_POWER, FULL_POWER, FULL_POWER);
-            } else if (gamepad1.dpad_down) {
-                this.bagaViteza(-FULL_POWER, -FULL_POWER, -FULL_POWER, -FULL_POWER);
-            } else if (gamepad1.dpad_left) {
-                this.bagaViteza(-FULL_POWER, FULL_POWER, FULL_POWER, -FULL_POWER);
-            } else if (gamepad1.dpad_right) {
-                this.bagaViteza(FULL_POWER, -FULL_POWER, -FULL_POWER, FULL_POWER);
-            } else {
-                this.bagaViteza(0, 0, 0, 0);
+            while (gamepad1.dpad_down) {
+                v1 = (-FULL_POWER);
+                v2 = (-FULL_POWER);
+                v3 = (-FULL_POWER);
+                v4 = (-FULL_POWER);
+                this.bagaViteza(v1, v3, v4, v2);
+            }
+            while (gamepad1.dpad_right) {
+                v1 = (+FULL_POWER);
+                v2 = (-FULL_POWER);
+                v3 = (-FULL_POWER);
+                v4 = (FULL_POWER);
+                this.bagaViteza(v1, v3, v4, v2);
+            }
+            while (gamepad1.dpad_up) {
+                v1 = (FULL_POWER);
+                v2 = (FULL_POWER);
+                v3 = (FULL_POWER);
+                v4 = (FULL_POWER);
+                this.bagaViteza(v1, v3, v4, v2);
+            }
+            while (gamepad1.dpad_left) {
+                v1 = (-FULL_POWER);
+                v2 = (FULL_POWER);
+                v3 = (FULL_POWER);
+                v4 = (-FULL_POWER);
+                this.bagaViteza(v1, v3, v4, v2);
             }
 
             // rotiri fine din triggere
-            if (gamepad1.right_trigger != 0) {
+            while  (gamepad1.right_trigger != 0) {
                 this.bagaViteza(0.3, -0.3, 0.3, -0.3);
-            } else if (gamepad1.left_trigger != 0) {
+            } while  (gamepad1.left_trigger != 0) {
                 this.bagaViteza(-0.3, 0.3, -0.3, 0.3);
-            } else {
-                this.bagaViteza(0, 0, 0, 0);
             }
+            //this.bagaViteza(0, 0, 0, 0);
 
             // schimbare putere
             if (gamepad2.a) {
