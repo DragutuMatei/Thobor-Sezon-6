@@ -1,5 +1,12 @@
 package org.firstinspires.ftc.teamcode.Amin.incercareDetectie3Patrate;
 
+import static org.firstinspires.ftc.teamcode.Amin.NuSeMaiUmbla.b_h;
+import static org.firstinspires.ftc.teamcode.Amin.NuSeMaiUmbla.b_l;
+import static org.firstinspires.ftc.teamcode.Amin.NuSeMaiUmbla.g_h;
+import static org.firstinspires.ftc.teamcode.Amin.NuSeMaiUmbla.g_l;
+import static org.firstinspires.ftc.teamcode.Amin.NuSeMaiUmbla.r_h;
+import static org.firstinspires.ftc.teamcode.Amin.NuSeMaiUmbla.r_l;
+
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
@@ -35,8 +42,8 @@ public class Detectie extends OpenCvPipeline {
     public Mat processFrame(Mat input) {
         Imgproc.cvtColor(input, mat, Imgproc.COLOR_RGB2HSV);
 
-        Scalar lowHSV = new Scalar(45, 100, 10);
-        Scalar highHSV = new Scalar(75, 255, 255);
+        Scalar lowHSV = new Scalar(r_l, g_l, b_l);
+        Scalar highHSV = new Scalar(r_h, g_h, b_h);
 
         Core.inRange(mat, lowHSV, highHSV, mat);
 
@@ -66,12 +73,12 @@ public class Detectie extends OpenCvPipeline {
 
         Imgproc.cvtColor(mat, mat, Imgproc.COLOR_GRAY2RGB);
 
-        Scalar nup = new Scalar(255, 0, 0);
-        Scalar verde = new Scalar(0, 255, 0);
+        Scalar nup = new Scalar(45, 100, 10);
+        Scalar verde = new Scalar(75, 255, 255);
 
-        Imgproc.rectangle(mat, LEFT_ROI, unde_e == unde_e.LEFT ? verde : nup);
-        Imgproc.rectangle(mat, CENTER_ROI, unde_e == unde_e.CENTER ? verde : nup);
-        Imgproc.rectangle(mat, RIGHT_ROI, unde_e == unde_e.RIGHT ? verde : nup);
+        Imgproc.rectangle(mat, LEFT_ROI, unde_e == UNDE_E.LEFT ? verde : nup);
+        Imgproc.rectangle(mat, CENTER_ROI, unde_e == UNDE_E.CENTER ? verde : nup);
+        Imgproc.rectangle(mat, RIGHT_ROI, unde_e == UNDE_E.RIGHT ? verde : nup);
 
         return mat;
     }
@@ -79,4 +86,5 @@ public class Detectie extends OpenCvPipeline {
     public UNDE_E getUnde_e() {
         return unde_e;
     }
+
 }

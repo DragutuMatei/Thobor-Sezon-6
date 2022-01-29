@@ -34,9 +34,6 @@ import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 @TeleOp()
 public class TeleOpulAlaBlana extends LinearOpMode {
 
-    public boolean iiApasat = false;
-    public boolean iiiiicosmiiiin = false;
-
     @Override
     public void runOpMode() throws InterruptedException {
         SampleMecanumDrive robot = new SampleMecanumDrive(hardwareMap);
@@ -53,6 +50,7 @@ public class TeleOpulAlaBlana extends LinearOpMode {
         while (opModeIsActive() && !isStopRequested()) {
             robot.update();
 
+            // joysticks vechi
 //            double leftPower;
 //            double rightPower;
 //
@@ -63,14 +61,14 @@ public class TeleOpulAlaBlana extends LinearOpMode {
 //
 //            robot.bagaViteza(leftPower, rightPower, leftPower, rightPower);
 
-
-            robot.setWeightedDrivePower(
-                    new Pose2d(
-                            -gamepad1.left_stick_y,
-                            -gamepad1.left_stick_x,
-                            -gamepad1.right_stick_x
-                    )
-            );
+            // joysticks nou
+//            robot.setWeightedDrivePower(
+//                    new Pose2d(
+//                            -gamepad1.left_stick_y,
+//                            -gamepad1.left_stick_x,
+//                            -gamepad1.right_stick_x
+//                    )
+//            );
 
             if(gamepad2.a){
                 NuSeMaiUmbla.FULL_POWER = 1;
@@ -88,6 +86,15 @@ public class TeleOpulAlaBlana extends LinearOpMode {
             } else if (gamepad1.dpad_right) {
                 robot.bagaViteza(FULL_POWER, -FULL_POWER, -FULL_POWER, FULL_POWER);
             } else {
+                robot.bagaViteza(0, 0, 0, 0);
+            }
+
+            //rotiri fine din triggere
+            if(gamepad1.right_trigger != 0){
+                robot.bagaViteza(FULL_POWER, -FULL_POWER, FULL_POWER, -FULL_POWER);
+            } else if(gamepad1.left_trigger != 0){
+                robot.bagaViteza(-FULL_POWER, FULL_POWER, -FULL_POWER, FULL_POWER);
+            } else{
                 robot.bagaViteza(0, 0, 0, 0);
             }
 
@@ -119,9 +126,9 @@ public class TeleOpulAlaBlana extends LinearOpMode {
             }
 
             //rata
-            if (gamepad1.left_trigger != 0) {
+            if (gamepad2.left_trigger != 0) {
                 robot.setRataPower(POWER_RATA);
-            } else if (gamepad1.right_trigger != 0) {
+            } else if (gamepad2.right_trigger != 0) {
                 robot.setRataPower(-POWER_RATA);
             } else {
                 robot.setRataPower(0);
