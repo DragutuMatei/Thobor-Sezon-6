@@ -34,6 +34,8 @@ import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 @TeleOp()
 public class TeleOpulAlaBlana extends LinearOpMode {
 
+    private double v1, v2, v3, v4;
+
     @Override
     public void runOpMode() throws InterruptedException {
         SampleMecanumDrive robot = new SampleMecanumDrive(hardwareMap);
@@ -48,75 +50,61 @@ public class TeleOpulAlaBlana extends LinearOpMode {
 
         if (isStopRequested()) return;
         while (opModeIsActive() && !isStopRequested()) {
-            robot.update();
+            // joysticks
+            double r = Math.hypot(gamepad1.left_stick_x, -gamepad1.left_stick_y);
+            double robotAngle = Math.atan2(-gamepad1.left_stick_y, gamepad1.left_stick_x) - Math.PI / 4;
+            double rightX = (gamepad1.right_stick_x);
+            v1 = r * Math.cos(robotAngle) + rightX;
+            v2 = r * Math.sin(robotAngle) - rightX;
+            v3 = r * Math.sin(robotAngle) + rightX;
+            v4 = r * Math.cos(robotAngle) - rightX;
 
-            // joysticks vechi
-//            double leftPower;
-//            double rightPower;
-//
-//            double drive = -gamepad1.left_stick_y;
-//            double turn = gamepad1.right_stick_x;
-//            leftPower = Range.clip(drive + turn, -1.0, 1.0);
-//            rightPower = Range.clip(drive - turn, -1.0, 1.0);
-//
-//            robot.bagaViteza(leftPower, rightPower, leftPower, rightPower);
+            robot.bagaViteza(v1, v2, v3, v4);
 
-            // joysticks nou
-//            robot.setWeightedDrivePower(
-//                    new Pose2d(
-//                            -gamepad1.left_stick_y,
-//                            -gamepad1.left_stick_x,
-//                            -gamepad1.right_stick_x
-//                    )
-//            );
-
-            if(gamepad2.a){
-                NuSeMaiUmbla.FULL_POWER = 1;
-            } else if(gamepad2.b){
-                NuSeMaiUmbla.FULL_POWER = 0.3;
-            }
-
-            //miscari din dpad uri
-            if (gamepad1.dpad_up) {
-                robot.bagaViteza(FULL_POWER, FULL_POWER, FULL_POWER, FULL_POWER);
-            } else if (gamepad1.dpad_down) {
+            // miscari din dpad uri
+            while (gamepad1.dpad_down) {
                 robot.bagaViteza(-FULL_POWER, -FULL_POWER, -FULL_POWER, -FULL_POWER);
-            } else if (gamepad1.dpad_left) {
-                robot.bagaViteza(-FULL_POWER, FULL_POWER, FULL_POWER, -FULL_POWER);
-            } else if (gamepad1.dpad_right) {
+            }
+            while (gamepad1.dpad_right) {
                 robot.bagaViteza(FULL_POWER, -FULL_POWER, -FULL_POWER, FULL_POWER);
-            } else {
-                robot.bagaViteza(0, 0, 0, 0);
+            }
+            while (gamepad1.dpad_up) {
+                robot.bagaViteza(FULL_POWER, FULL_POWER, FULL_POWER, FULL_POWER);
+            }
+            while (gamepad1.dpad_left) {
+                robot.bagaViteza(-FULL_POWER, FULL_POWER, FULL_POWER, -FULL_POWER);
             }
 
-            //rotiri fine din triggere
-            if(gamepad1.right_trigger != 0){
-                robot.bagaViteza(FULL_POWER, -FULL_POWER, FULL_POWER, -FULL_POWER);
-            } else if(gamepad1.left_trigger != 0){
-                robot.bagaViteza(-FULL_POWER, FULL_POWER, -FULL_POWER, FULL_POWER);
-            } else{
-                robot.bagaViteza(0, 0, 0, 0);
+            // rotiri fine din triggere
+            while (gamepad1.right_trigger != 0) {
+                robot.bagaViteza(0.3, -0.3, 0.3, -0.3);
+            }
+            while (gamepad1.left_trigger != 0) {
+                robot.bagaViteza(-0.3, 0.3, -0.3, 0.3);
             }
 
-            robot.update();
-            Pose2d poseEstimate = robot.getPoseEstimate();
-            telemetry.addData("x", poseEstimate.getX());
-            telemetry.addData("y", poseEstimate.getY());
-            telemetry.addData("heading", poseEstimate.getHeading());
-            //absortia
+            // schimbare putere
+            if (gamepad2.a) {
+                NuSeMaiUmbla.FULL_POWER = 1;
+            } else if (gamepad2.b) {
+                NuSeMaiUmbla.FULL_POWER = 0.7;
+            }
+
+            // absorbtia
             if (gamepad1.a) {
                 robot.setAbsortiePower(POWER_ABS);
             } else {
                 robot.setAbsortiePower(0);
             }
 
+            // cuva
             if (gamepad1.x) {
                 robot.setCuvaPosition(POZITIE_NORMAL_CUVA);
             } else if (gamepad1.y) {
                 robot.setCuvaPosition(POZITIE_ARUNCA_CUVA);
             }
 
-            //brat
+            // brat
             if (gamepad1.left_bumper) {
                 robot.setPowerBrat(POWER_BRAT);
             } else if (gamepad1.right_bumper) {
@@ -125,7 +113,7 @@ public class TeleOpulAlaBlana extends LinearOpMode {
                 robot.setPowerBrat(0);
             }
 
-            //rata
+            // rata
             if (gamepad2.left_trigger != 0) {
                 robot.setRataPower(POWER_RATA);
             } else if (gamepad2.right_trigger != 0) {
@@ -134,11 +122,13 @@ public class TeleOpulAlaBlana extends LinearOpMode {
                 robot.setRataPower(0);
             }
 
+            // marker
             if (gamepad2.x) {
                 robot.setMarkerPosition(POZITIE_MARKER_IA);
             } else if (gamepad2.y) {
                 robot.setMarkerPosition(POZITIE_MARKER_LUAT);
             }
+            robot.update();
         }
     }
 

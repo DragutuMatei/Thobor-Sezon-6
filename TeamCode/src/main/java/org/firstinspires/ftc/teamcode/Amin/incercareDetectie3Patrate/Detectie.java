@@ -36,7 +36,7 @@ public class Detectie extends OpenCvPipeline {
     );
 
 
-    static double PERCENT_COLOR_THRESHOLD = 0.1;
+    static double PERCENT_COLOR_THRESHOLD = 0.7;
 
     @Override
     public Mat processFrame(Mat input) {

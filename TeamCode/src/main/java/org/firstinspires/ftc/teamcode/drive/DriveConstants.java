@@ -35,12 +35,14 @@ public class DriveConstants {
      */
 
     public static final boolean RUN_USING_ENCODER = true;
-    public static PIDFCoefficients MOTOR_VELO_PID = new PIDFCoefficients(23, 0, 8,
-//            getMotorVelocityF(MAX_RPM / 60 * TICKS_PER_REV));
-            13.160110214310398);
+//    public static PIDFCoefficients MOTOR_VELO_PID = new PIDFCoefficients(23, 0, 8,
+////            getMotorVelocityF(MAX_RPM / 60 * TICKS_PER_REV));
+//            13.160110214310398);
 
-//    public static PIDFCoefficients MOTOR_VELO_PID = new PIDFCoefficients(0, 0, 0,
+    public static PIDFCoefficients MOTOR_VELO_PID = new PIDFCoefficients(17, 0, 5,
 //            getMotorVelocityF(MAX_RPM / 60 * TICKS_PER_REV));
+            12.160110214310398
+    );
     /*
      * These are physical constants that can be determined from your robot (including the track
      * width; it will be tune empirically later although a rough estimate is important). Users are
@@ -50,8 +52,8 @@ public class DriveConstants {
      * convenience. Make sure to exclude any gear ratio included in MOTOR_CONFIG from GEAR_RATIO.
      */
     public static double WHEEL_RADIUS = 1.8898; // in
-    public static double GEAR_RATIO = 1; // output (wheel) speed / input (motor) speed
-    public static double TRACK_WIDTH = 13.6; // in
+    public static double GEAR_RATIO = 1.030734654889655; // output (wheel) speed / input (motor) speed
+    public static double TRACK_WIDTH = 13.9095; // in
 
     /*
      * These are the feedforward parameters used to model the drive motor behavior. If you are using
@@ -93,8 +95,13 @@ public class DriveConstants {
      */
     public static double MAX_VEL = 56.39154320950253;
     public static double MAX_ACCEL = 52.48291908330528;
-    public static double MAX_ANG_VEL = Math.toRadians(246.4794885245902);
-    public static double MAX_ANG_ACCEL = Math.toRadians(246.4794885245902);
+//    public static double MAX_ANG_VEL = Math.toRadians(246.4794885245902);
+//    public static double MAX_ANG_ACCEL = Math.toRadians(246.4794885245902);
+
+
+
+    public static double MAX_ANG_VEL = 4.3018786133856795;
+    public static double MAX_ANG_ACCEL = 4.3018786133856795;
 
 
     public static double encoderTicksToInches(double ticks) {

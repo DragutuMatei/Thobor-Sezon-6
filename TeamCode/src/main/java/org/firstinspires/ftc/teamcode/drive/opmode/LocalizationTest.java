@@ -44,7 +44,11 @@ public class LocalizationTest extends LinearOpMode {
                     )
             );
 
-            drive.update();
+
+//            telemetry.addData("getWheelPositions: ", drive.getWheelPositions());
+//            telemetry.addData("getLocalizer: ", drive.getLocalizer());
+//            telemetry.addData("getPoseEstimate: ", drive.getPoseEstimate());
+
             
 //            if(gamepad2.a){
 //                NuSeMaiUmbla.FULL_POWER = 1;
@@ -80,6 +84,7 @@ public class LocalizationTest extends LinearOpMode {
             telemetry.addData("y", poseEstimate.getY());
             telemetry.addData("heading", poseEstimate.getHeading());
 
+            telemetry.update();
             //absortia
 //            if (gamepad1.a) {
 //                drive.setAbsortiePower(POWER_ABS);

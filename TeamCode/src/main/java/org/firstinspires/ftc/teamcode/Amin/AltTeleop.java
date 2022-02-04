@@ -95,9 +95,10 @@ public class AltTeleop extends LinearOpMode {
             }
 
             // rotiri fine din triggere
-            while  (gamepad1.right_trigger != 0) {
+            while (gamepad1.right_trigger != 0) {
                 this.bagaViteza(0.3, -0.3, 0.3, -0.3);
-            } while  (gamepad1.left_trigger != 0) {
+            }
+            while (gamepad1.left_trigger != 0) {
                 this.bagaViteza(-0.3, 0.3, -0.3, 0.3);
             }
             //this.bagaViteza(0, 0, 0, 0);
